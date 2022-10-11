@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - /var/lib/postgresql/data/
+    env_file:
+      - ./.env
+
+  backend:
+    image: pitmo/NOT_EXISTS_JUST_FOR_TASK:v1
+    expose:
+      - 8000
+    restart: always
+    volumes:
+      - static_value:/app/backend_static/
+      - media_value:/app/backend_media/
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+volumes:
+  postgres_data:
+  static_value:
+  media_value:
